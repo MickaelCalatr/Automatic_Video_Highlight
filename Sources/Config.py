@@ -1,6 +1,6 @@
 import argparse
 
-VERSION = "1.5.0"
+VERSION = "1.5.1"
 
 class Config:
     def initialize(self):
@@ -17,8 +17,6 @@ class Config:
         args = vars(ap.parse_args())
         if args["debug"] != None and args["debug"] == "1":
             self.debug = True
-        if args["verbose"] != None and args["verbose"] == "0":
-            self.verbose = False
         self.video_name_dest = args["name"]
         self.max_thread = args["thread"]
         self.video_source = args["input"]
