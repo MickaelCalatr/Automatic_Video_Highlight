@@ -1,12 +1,11 @@
 import argparse
 
-VERSION = "1.0.0"
+VERSION = "1.5.0"
 
 class Config:
     def initialize(self):
         ap = argparse.ArgumentParser()
         ap.add_argument("-d", "--debug", help = "Debug mode (1 to activate)")
-        ap.add_argument("-v", "--verbose", help = "Verbose mode (0 to deactivate)")
         ap.add_argument("-n", "--name", help = "Video result name", type=str, default="Result.mp4")
         ap.add_argument("-m", "--msec", help = "time record before the action (in msec).", type=int, default=90)
         ap.add_argument("-th", "--thread", help = "Number of thread in same time (1 to desactivate).", type=int, default=15)
@@ -35,7 +34,7 @@ class Config:
         self.max_thread = 15
         self.teams = []
         self.camera = 0
-
+        self.result_file = "videos_list.txt"
         # Debug variables
         self.debug = False
 

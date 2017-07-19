@@ -27,22 +27,25 @@ class GetData:
         self.cap.set(cv2.CAP_PROP_POS_FRAMES, pos)
 
     def get_frame(self):
-        self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.frame + 15)
+        nb = 15
+        if self.frame + 15 > self.total_frames:
+            nb = self.total_frames - self.frame
+        self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.frame + nb)
         frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
         name = str(self.camera) + "." + str(frame)
         flag, image = self.cap.read()
         if flag == True:
             dic = {'Frame' : frame, 'Name' : name, 'Src': image, 'Image': self.enhance_color(image)}
-            #self.elems.append(dic)
-            #self.size += 1
-            self.frame += 15
+            self.frame += nb
             return dic
-        self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame - 15)
+        self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame - nb)
         cv2.waitKey(1000)
         print("Error during reading frame: ", self.frame)
         return self.get_frame()
 
     def get_big_frame(self, nb):
+        if self.frame + 15 > self.total_frames:
+            nb = self.total_frames - self.frame
         self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.frame + nb - 1)
         frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
         name = str(self.camera) + "." + str(frame)
@@ -62,26 +65,9 @@ class GetData:
         colored = converter.enhance(self.color)
         return numpy.array(colored)
 
-    def write_frames(self, start, end):
-        #print("Save")
-        name = conf.video_source[conf.camera]
-        end = (end - start) / 25
-        start_point = start / 25
-        #print("ffmpeg -r 25 -i " + name +" -ss " + str(start_point) + " -c copy -t " + str(end) + " ./tmp/" + str(start) + ".mp4")
-        os.system("ffmpeg -loglevel quiet -r 25 -i " + name +" -ss " + str(start_point) + " -c copy -t " + str(end) + " ./tmp/" + str(start) + ".mp4")
-        self.size = 0
-        self.elems.clear()
-        #if len(self.elems) > 0:
-        #   while len(self.elems) > 0:
-        #        cv2.imwrite("./tmp/pic" + '{0:07}'.format(self.img_written) + ".png", self.elems.pop(0)['Src'])
-        #        self.img_written += 1
-        #    self.size = 0
-
     def __init__(self):
         self.img_written = 0
         self.cap = None
-        self.elems = []
-        self.size = 0
         self.frame = 0
         self.msec = conf.msec
         self.camera = int(conf.camera)

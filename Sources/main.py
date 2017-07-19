@@ -1,6 +1,9 @@
 from Config import conf
 from GetData import GetData
 from Detect import Detect
+
+from SaveData import concatenate
+import Folder
 import os
 
 if __name__ == '__main__':
@@ -18,13 +21,18 @@ if __name__ == '__main__':
                 print("Loading data : Done!\n")
 
                 print("Processing...\n")
-                detection = Detect(conf, data)
+                detection = Detect(data)
                 detection.run()
                 print("Processing : Done!\n")
 
         print("Video creating...")
-        #os.system("ffmpeg -r 29 -f image2 -s 1920x1080 -i tmp/pic%07d.png  " + conf.video_name_dest)
+        concatenate()
         print("Video creating : Done!")
+
+        print("Cleaning...")
+        Folder.remove(conf.result_file)
+        Folder.delete("tmp")
+        print("Cleaning : Done!")
 
     except KeyboardInterrupt:
         print("\n\nEXIT: interrupt received, stoppin...")
