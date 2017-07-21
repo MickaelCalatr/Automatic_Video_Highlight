@@ -11,13 +11,13 @@ class GetData:
         self.cap = cv2.VideoCapture(name)
         p = ""
         while not self.cap.isOpened():
-            self.cap = cv2.VideoCapture(name)
-            cv2.waitKey(1000)
             sys.stdout.write("\033[K")
             print("Wait for the header", p, sep='', end="\r", flush=True)
             p = p + "."
             if p == "....":
                 p = ""
+            cv2.waitKey(1000)
+            self.cap = cv2.VideoCapture(name)
         self.total_frames = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
     def set_position(self, nb):
