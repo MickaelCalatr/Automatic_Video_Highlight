@@ -10,7 +10,7 @@ class Config:
         ap.add_argument("-m", "--msec", help = "time record before the action (in msec).", type=int, default=90)
         ap.add_argument("-th", "--thread", help = "Number of thread in same time (1 to desactivate).", type=int, default=15)
         ap.add_argument('--version', action='version', version='%(prog)s V' + str(VERSION))
-        ap.add_argument("-i", "--input", help = "Video", required=True, type=str, nargs='+')
+        ap.add_argument("-i", "--input", help = "Video", required=True, nargs='+')
         ap.add_argument("-tc1", "--team1", help = "Color of team one (blue, red, yellow, green)?", required=True)
         ap.add_argument("-tc2", "--team2", help = "Color of team two (blue, red, yellow, green)?", required=True)
 
