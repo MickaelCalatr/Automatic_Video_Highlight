@@ -8,7 +8,9 @@ import numpy
 
 class GetData:
     def get_video(self, name):
+        print(name)
         self.cap = cv2.VideoCapture(name)
+        print(name)
         p = ""
         while not self.cap.isOpened():
             sys.stdout.write("\033[K")
