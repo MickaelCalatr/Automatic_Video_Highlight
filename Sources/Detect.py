@@ -23,19 +23,19 @@ class Detect:
         self.time = Time(self.data.total_frames)
 
     def take_section(self):
-        self.data.set_position(conf.max_thread)
+        self.data.set_position(conf.fps)
         self.time.old_frame = self.data.frame
         i = 0
         keep = True
         start_frame = self.data.frame
         while (self.data.frame < self.data.total_frames and keep == True) or (self.data.frame < self.data.total_frames and i < conf.msec):
-            frame = self.data.get_frame()
+            frame = self.data.get_frame(conf.fps)
             keep = self.loop(frame)
             if keep:
                 i = 0
             else:
-                if self.data.frame + 15 < self.data.total_frames:
-                    i += 15
+                if self.data.frame + conf.fps < self.data.total_frames:
+                    i += conf.fps
                 else:
                     i += self.data.total_frames - self.data.frame
             self.time.update()
@@ -45,7 +45,7 @@ class Detect:
     def run(self):
         self.initialize()
         while self.data.frame < self.data.total_frames:
-            frame = self.data.get_big_frame(conf.max_thread)
+            frame = self.data.get_frame(conf.fps)
             keep = self.loop(frame)
 
             if keep == True:

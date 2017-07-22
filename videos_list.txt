@@ -1,0 +1,2 @@
+file /home/calatraba/Research/Automatic_Video_Highlight/tmp/195.mp4
+file /home/calatraba/Research/Automatic_Video_Highlight/tmp/1080.mp4
