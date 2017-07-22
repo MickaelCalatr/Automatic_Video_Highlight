@@ -3,7 +3,7 @@
 import os
 
 def Update():
-    os.system("git pull")
+    os.system("git checkout master ; git pull")
 
 if __name__ == '__main__':
     Update()
