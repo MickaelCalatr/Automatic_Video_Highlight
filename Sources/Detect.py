@@ -109,7 +109,7 @@ class Detect:
                 rate.add_player(x, y, h, w)
                 if conf.debug:
                     cv2.rectangle(image_tmp, (x, y), (x + w, y + h), (0, 0, 255), 2)
-                    cv2.rectangle(image_tmp, (rate.right, rate.down), (rate.left, rate.up), (0, 0, 255), 2)
+                    cv2.polylines(image_tmp, [rate.points], True, (0, 0, 255), 2)
         return rate.rate_img(), image_tmp
 
 

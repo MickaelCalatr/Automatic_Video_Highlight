@@ -14,7 +14,8 @@ if __name__ == '__main__':
 
         for i in range(len(conf.video_source)):
             if (i == 0 or i == 2):
-                conf.camera = i
+                name = conf.video_source[i].split("/")
+                conf.camera = int(name[-1].split('.')[0])
                 print("Loading data from :", conf.video_source[i], "...")
                 data = GetData()
                 data.get_video(conf.video_source[i])
