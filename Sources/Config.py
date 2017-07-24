@@ -37,6 +37,8 @@ class Config:
         self.debug = False
 
         # Colours
+        self.contrast = 1.3
+        self.color = 1
         self.boundaries = {
             'blue': ([86, 31, 4], [220, 88, 50]),
             'red': ([0, 0, 170], [140, 125, 255]),

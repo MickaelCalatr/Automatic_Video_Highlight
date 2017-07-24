@@ -51,10 +51,10 @@ class RateImage:
 
 
         if camera == 0:
-            up = [self.width_compute(1.2), self.height_compute(2.9)]
-            down = [self.width_compute(1.4), self.height_compute(1.7)]
-            left = [self.width_compute(2.9), self.height_compute(2)]
-            right = [int(self.width + 150), self.height_compute(2.6)]
+            up = [self.width_compute(1.7), self.height_compute(1.9)]
+            down = [self.width_compute(2), self.height_compute(1.1)]
+            left = [int(-150 * self.width / 1280), self.height_compute(1.3)]
+            right = [int(self.width + 20), self.height_compute(1.7)]
         else:
             up = [self.width_compute(9), self.height_compute(2.8)]
             down = [self.width_compute(2.4), self.height_compute(1.8)]

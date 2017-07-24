@@ -1,6 +1,7 @@
 from PIL import ImageEnhance
 from PIL import Image
 from Config import conf
+from ImageEnhance import *
 import os
 import sys
 import cv2
@@ -35,7 +36,7 @@ class GetData:
         name = str(self.camera) + "." + str(frame)
         flag, image = self.cap.read()
         if flag == True:
-            dic = {'Frame' : frame, 'Name' : name, 'Src': image, 'Image': self.enhance_color(image)}
+            dic = {'Frame' : frame, 'Name' : name, 'Src': image, 'Image': enhance_color(image)}
             self.frame += nb
             return dic
         self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame - nb)
@@ -51,19 +52,12 @@ class GetData:
         name = str(self.camera) + "." + str(frame)
         flag, image = self.cap.read()
         if flag == True:
-            dic = {'Frame' : frame, 'Name' : name, 'Src': image, 'Image': self.enhance_color(image)}
+            dic = {'Frame' : frame, 'Name' : name, 'Src': image, 'Image': enhance_color(image)}
             self.frame += nb
             return dic
         self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame - nb - 1)
         cv2.waitKey(1000)
         return self.get_big_frame(nb)
-
-    def enhance_color(self, im):
-        img = ImageEnhance.Contrast(Image.fromarray(im))
-        contrast = img.enhance(self.contrast)
-        converter = ImageEnhance.Color(contrast)
-        colored = converter.enhance(self.color)
-        return numpy.array(colored)
 
     def __init__(self):
         self.img_written = 0
