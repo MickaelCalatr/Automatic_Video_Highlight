@@ -56,9 +56,13 @@ class Detect:
             x.join()
 
     def loop(self, frame):
-        sys.stdout.write("\033[F\033[J\033[F\033[J")
-        print("Frame:\t\t", self.data.frame, "/", self.data.total_frames)
-        print(self.time.timer(int(frame['Frame'])))
+        if len(self.threads) > 0:
+            sys.stdout.write("\033[F\033[J")
+            print("Saving ...")
+        else:
+            sys.stdout.write("\033[F\033[J\033[F\033[J")
+            print("Frame:\t\t", self.data.frame, "/", self.data.total_frames)
+            print(self.time.timer(int(frame['Frame'])))
 
         keep = self.detection(frame)
         return keep
