@@ -102,3 +102,7 @@ ENV/
 
 # videos
 *.mp4
+
+# files
+/tmp
+videos_list.txt
