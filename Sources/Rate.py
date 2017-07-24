@@ -29,6 +29,12 @@ class RateImage:
         player.y = int((player.y * self.height) / 720)
         self.players.append(player)
 
+    def width_compute(self, x):
+        return int((self.width / x) * self.width / 1280)
+
+    def height_compute(self, y):
+        return int((self.height / y) * self.height / 720)
+
     def __init__(self, shape, camera):
         self.players = []
         (self.height, self.width, _) = shape
@@ -45,18 +51,16 @@ class RateImage:
 
 
         if camera == 0:
-            self.right = int((int((2 * self.width) / 3.1) * self.width) / 1280)
-            self.left = int((int(self.width / 6) * self.width) / 1280)
+            up = [self.width_compute(1.2), self.height_compute(2.9)]
+            down = [self.width_compute(1.4), self.height_compute(1.7)]
+            left = [self.width_compute(2.9), self.height_compute(2)]
+            right = [int(self.width + 150), self.height_compute(2.6)]
         else:
-            up_x = int((int(self.width / 9) * self.width) / 1280)
-            up_y = int((int(self.height / 2.8) * self.height) / 720)
-            down_x = int((int(self.width / 2.4) * self.width) / 1280)
-            down_y = int((int(self.height / 1.8) * self.height) / 720)
-            left_x = int((-150 * self.width) / 1280)
-            left_y = int((int(self.height / 2.3) * self.height) / 720)
-            right_x = int((int(self.width) / 1.4 * self.width) / 1280)
-            right_y = int((int(self.height / 2.3) * self.height) / 720)
-        self.points = np.array([[up_x, up_y], [left_x, left_y], [down_x, down_y], [right_x, right_y]])
+            up = [self.width_compute(9), self.height_compute(2.8)]
+            down = [self.width_compute(2.4), self.height_compute(1.8)]
+            left = [int(-150 * self.width / 1280), self.height_compute(2.3)]
+            right = [self.width_compute(1.4), self.height_compute(2.3)]
+        self.points = np.array([up, left, down, right])
         self.bbPath = mplPath.Path(self.points)
         self.action = ""
         self.max_keep = 10
