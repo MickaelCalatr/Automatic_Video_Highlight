@@ -30,13 +30,12 @@ if __name__ == '__main__':
         concatenate()
         print("Video creating : Done!")
 
-        print("Cleaning...")
-        Folder.remove(conf.result_file)
-        Folder.delete("tmp")
-        print("Cleaning : Done!")
-
     except KeyboardInterrupt:
         print("\n\nEXIT: interrupt received, stoppin...")
     except FileNotFoundError:
         print("ERROR: Video  [", conf.video_source,"]  doesn't exist.")
+    print("Cleaning...")
+    Folder.remove(conf.result_file)
+    Folder.delete("tmp")
+    print("Cleaning : Done!")
     print("Finish.")
