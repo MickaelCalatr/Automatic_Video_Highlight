@@ -47,7 +47,7 @@ class GetData:
     def __init__(self):
         self.img_written = 0
         self.cap = None
-        self.frame = 180570
+        self.frame = 0
         self.msec = conf.msec
         self.camera = int(conf.camera)
         self.total_frames = 0
