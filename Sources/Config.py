@@ -1,6 +1,6 @@
 import argparse
 
-VERSION = "1.6.3.2"
+VERSION = "1.6.3.3"
 
 class Config:
     def initialize(self):
@@ -29,7 +29,7 @@ class Config:
         self.video_source = []
         self.video_name_dest = ""
         self.msec = 90
-        self.max_thread = 15
+        self.fps = 15
         self.teams = []
         self.camera = 0
         self.result_file = "videos_list.txt"
