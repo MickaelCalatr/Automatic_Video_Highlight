@@ -31,22 +31,6 @@ class GetData:
         nb = 15
         if self.frame + 15 > self.total_frames:
             nb = self.total_frames - self.frame
-        self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.frame + nb)
-        frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
-        name = str(self.camera) + "." + str(frame)
-        flag, image = self.cap.read()
-        if flag == True:
-            dic = {'Frame' : frame, 'Name' : name, 'Src': image, 'Image': enhance_color(image)}
-            self.frame += nb
-            return dic
-        self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame - nb)
-        cv2.waitKey(1000)
-        print("Error during reading frame: ", self.frame)
-        return self.get_frame()
-
-    def get_big_frame(self, nb):
-        if self.frame + 15 > self.total_frames:
-            nb = self.total_frames - self.frame
         self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.frame + nb - 1)
         frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
         name = str(self.camera) + "." + str(frame)
@@ -57,12 +41,13 @@ class GetData:
             return dic
         self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame - nb - 1)
         cv2.waitKey(1000)
-        return self.get_big_frame(nb)
+        print("Error during reading frame: ", self.frame)
+        return self.get_frame()
 
     def __init__(self):
         self.img_written = 0
         self.cap = None
-        self.frame = 0
+        self.frame = 180570
         self.msec = conf.msec
         self.camera = int(conf.camera)
         self.total_frames = 0

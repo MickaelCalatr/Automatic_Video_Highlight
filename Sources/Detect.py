@@ -45,7 +45,7 @@ class Detect:
     def run(self):
         self.initialize()
         while self.data.frame < self.data.total_frames:
-            frame = self.data.get_big_frame(conf.max_thread)
+            frame = self.data.get_frame()
             keep = self.loop(frame)
 
             if keep == True:
