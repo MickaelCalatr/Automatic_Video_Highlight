@@ -13,15 +13,15 @@ if __name__ == '__main__':
         print("Initialize : Done!\n")
 
         for i in range(len(conf.video_source)):
-            if (i == 0 or i == 2):
-                name = conf.video_source[i].split("/")
-                conf.camera = int(name[-1].split('.')[0])
+            name = conf.video_source[i].split("/")
+            conf.camera = int(name[-1].split('.')[0])
+            if (conf.camera == 0 or conf.camera == 2):
                 print("Loading data from :", conf.video_source[i], "...")
                 data = GetData()
                 data.get_video(conf.video_source[i])
                 print("Loading data : Done!\n")
 
-                print("Processing...\n")
+                print("Processing...\n\n\n")
                 detection = Detect(data)
                 detection.run()
                 print("Processing : Done!\n")

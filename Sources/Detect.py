@@ -34,18 +34,20 @@ class Detect:
             if keep:
                 i = 0
             else:
-                if self.data.frame + 15 < self.data.total_frames:
-                    i += 15
+                if self.data.frame + conf.fps < self.data.total_frames:
+                    i += conf.fps
                 else:
                     i += self.data.total_frames - self.data.frame
             self.time.update()
         t = threading.Thread(target=save, args=(start_frame, self.data.frame,))
+        self.threads.append(t)
+        self.file_saved += 1
         t.start()
 
     def run(self):
         self.initialize()
         while self.data.frame < self.data.total_frames:
-            frame = self.data.get_frame()#conf.max_thread)
+            frame = self.data.get_frame()
             keep = self.loop(frame)
 
             if keep == True:
@@ -56,11 +58,9 @@ class Detect:
             x.join()
 
     def loop(self, frame):
-        if len(self.threads) > 0:
-            sys.stdout.write("\033[F\033[J")
-            print("Saving ...")
-        else:
-            sys.stdout.write("\033[F\033[J\033[F\033[J")
+        if self.time.need_to_print():
+            sys.stdout.write("\033[F\033[J\033[F\033[J\033[F\033[J")
+            print("Files saved:\t", self.file_saved)
             print("Frame:\t\t", self.data.frame, "/", self.data.total_frames)
             print(self.time.timer(int(frame['Frame'])))
 
@@ -120,4 +120,5 @@ class Detect:
     def __init__(self, data):
         self.data = data
         self.time = None
+        self.file_saved = 0
         self.threads = []
