@@ -39,7 +39,7 @@ class Detect:
                 else:
                     i += self.data.total_frames - self.data.frame
             self.time.update()
-        t = threading.Thread(target=save, args=(start_frame, self.data.frame,))
+        t = threading.Thread(target=save, args=(start_frame, self.data.frame, self.data.name,))
         self.threads.append(t)
         self.file_saved += 1
         t.start()

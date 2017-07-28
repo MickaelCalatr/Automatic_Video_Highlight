@@ -8,8 +8,7 @@ def add_video(name):
     with open(conf.result_file,"a+") as f:
         f.write('file ' + path + str(name) + '.mp4\n')
 
-def save(start, end):
-    name = conf.video_source[conf.camera]
+def save(start, end, name):
     end = (end - start) / 25
     start_point = start / 25
     add_video(start)

@@ -21,6 +21,7 @@ def print_points(line):
 
 class GetData:
     def get_video(self, name):
+        self.name = name
         self.cap = cv2.VideoCapture(name)
         while not self.cap.isOpened():
             print_points("Wait for the header")
