@@ -16,5 +16,6 @@ def crop_image(array, image):
     mask = np.zeros(image.shape, dtype=np.uint8)
     channel_count = image.shape[2]
     ignore_mask_color = (255,) * channel_count
+    #array = array.reshape(-1,1,2)
     cv2.fillConvexPoly(mask, array, ignore_mask_color)
     return cv2.bitwise_and(image, mask)

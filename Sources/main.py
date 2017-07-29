@@ -1,7 +1,7 @@
 from Config import conf
 from GetData import GetData
 from Detect import Detect
-
+from ColorsFinder import find_colors
 from SaveData import concatenate
 import Folder
 import os
@@ -20,6 +20,11 @@ if __name__ == '__main__':
                 data = GetData()
                 data.get_video(conf.video_source[i])
                 print("Loading data : Done!\n")
+
+                if len(conf.teams) == 0:
+                    print("Finding teams's colors ...")
+                    find_colors(data)
+                print("Finding colors :Done!", conf.teams, "\n")
 
                 print("Processing...\n\n\n")
                 detection = Detect(data)
