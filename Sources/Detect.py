@@ -1,7 +1,7 @@
 from Rate import RateImage
 from Time import Time
 from Config import conf
-from SaveData import save
+from SaveData import *
 
 import Folder
 import shutil
@@ -27,10 +27,11 @@ class Detect:
         self.time.old_frame = self.data.frame
         i = 0
         keep = True
+        max_player = 0
         start_frame = self.data.frame
         while (self.data.frame < self.data.total_frames and keep == True) or (self.data.frame < self.data.total_frames and i < conf.msec):
             frame = self.data.get_frame()
-            keep = self.loop(frame)
+            keep, rate = self.loop(frame)
             if keep:
                 i = 0
             else:
@@ -38,8 +39,10 @@ class Detect:
                     i += conf.fps
                 else:
                     i += self.data.total_frames - self.data.frame
+            if max_player < len(rate.players):
+                max_player = len(rate.players)
             self.time.update()
-        t = threading.Thread(target=save, args=(start_frame, self.data.frame, self.data.name,))
+        t = threading.Thread(target=save_doc, args=(start_frame, self.data.frame, max_players,))
         self.threads.append(t)
         self.file_saved += 1
         t.start()
@@ -48,7 +51,7 @@ class Detect:
         self.initialize()
         while self.data.frame < self.data.total_frames:
             frame = self.data.get_frame()
-            keep = self.loop(frame)
+            keep, _ = self.loop(frame)
 
             if keep == True:
                 self.take_section()
@@ -64,8 +67,8 @@ class Detect:
             print("Frame:\t\t", self.data.frame, "/", self.data.total_frames)
             print(self.time.timer(int(frame['Frame'])))
 
-        keep = self.detection(frame)
-        return keep
+        keep, rate = self.detection(frame)
+        return keep, rate
 
     def detection(self, frame):
         image = frame['Image']
@@ -87,13 +90,13 @@ class Detect:
             except ValueError:
                 j = j + 1
         if conf.debug:
-            keep, img_debug = self.search(image, final_img, frame['Frame'])
+            keep, rate, img_debug = self.search(image, final_img, frame['Frame'])
             cv2.imshow('Features', img_debug)
             cv2.waitKey(0)
-            return keep
+            return keep, rate
         else:
-            keep, _ = self.search(image, final_img, frame['Frame'])
-            return keep
+            keep, rate, _ = self.search(image, final_img, frame['Frame'])
+            return keep, rate
 
 
     def search(self, image, final_image, index):
@@ -114,7 +117,7 @@ class Detect:
                 if conf.debug:
                     cv2.rectangle(image_tmp, (x, y), (x + w, y + h), (0, 0, 255), 2)
                     cv2.polylines(image_tmp, [rate.points], True, (0, 0, 255), 2)
-        return rate.rate_img(), image_tmp
+        return rate.rate_img(), rate, image_tmp
 
 
     def __init__(self, data):

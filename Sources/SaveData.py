@@ -8,6 +8,10 @@ def add_video(name):
     with open(conf.result_file,"a+") as f:
         f.write('file ' + path + str(name) + '.mp4\n')
 
+def save_doc(start, end, nb):
+    with open("output.txt", "w") as f:
+        f.write(start + ' ' + end + ' '+ str(nb) + '\n')
+        
 def save(start, end, name):
     end = (end - start) / 25
     start_point = start / 25
