@@ -42,7 +42,7 @@ class Detect:
             if max_player < len(rate.players):
                 max_player = len(rate.players)
             self.time.update()
-        t = threading.Thread(target=save_doc, args=(start_frame, self.data.frame, max_players,))
+        t = threading.Thread(target=save_doc, args=(start_frame, self.data.frame, max_player,))
         self.threads.append(t)
         self.file_saved += 1
         t.start()
