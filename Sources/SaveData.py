@@ -10,7 +10,7 @@ def add_video(name):
 
 def save_doc(start, end, nb):
     with open("output.txt", "w") as f:
-        f.write(start + ' ' + end + ' '+ str(nb) + '\n')
+        f.write(str(start) + ' ' + str(end) + ' '+ str(nb) + '\n')
         
 def save(start, end, name):
     end = (end - start) / 25
